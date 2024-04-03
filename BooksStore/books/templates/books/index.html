@@ -1,0 +1,59 @@
+{% extends 'layouts/base.html' %}
+{% load static %}
+{% block title %} Books Home {% endblock %}
+
+{% block body %}
+    <div id="Books">
+        <div class="row text-center border border-1 m-5 shadow p-3 bg-body rounded">
+            <h2 class="col">Books</h2>
+        </div>
+
+        <div class="row justify-content-center row-cols-1 row-cols-sm-2 row-cols-md-3 g-4 m-3">
+            {% for book in books %}
+                <div class="col-12 col-sm-6 col-lg-4">
+                    <div class="card m-2 h-100 shadow-lg">
+                        <img src="{% static 'books/images/'|add:book.image %}" alt="Image 1"
+                             class="border border-1 rounded"
+                             style="height: 40vh;">
+                        <h2 class="card-title text-center text-primary m-2"><a
+                                href="{% url 'books.show' book.id %}">{{ book.title }}</a></h2>
+                        <div class="card-body">
+                            <div class="row fs-5">
+                                <div class="col-6">
+                                    <div class="row">
+                                        <div class="col-12 my-2"><i
+                                                class="fa-solid fa-check text-primary me-3"></i>{{ book.category }}
+                                        </div>
+                                        <div class="col-12 my-2"><i class="fa-solid fa-check text-primary me-3"></i>
+                                            <span class="text-success">{{ book.pagesNo }}</span>
+                                        </div>
+                                        <div class="col-12 my-2"><i class="fa-solid fa-check text-primary me-3"></i>
+                                            {{ book.ISBN }}</div>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="row">
+                                        <div class="col-12 my-2"><i class="fa-solid fa-check text-primary me-3"></i>
+                                            {{ book.author }}</div>
+                                        <div class="col-12 my-2"><i class="fa-solid fa-check text-primary me-3"></i>
+                                            $ {{ book.price }}</div>
+                                        <div class="col-12 my-2">
+                                            <div class="row justify-content-around align-items-center">
+                                                <button class="btn col-4 fs-5">
+                                                    <i class="fa-solid fa-heart"></i>
+                                                </button>
+                                                <button class="btn col-4 fs-5">
+                                                    <i class="fa-solid fa-cart-shopping"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
