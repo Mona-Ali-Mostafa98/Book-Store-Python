@@ -39,7 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'books.apps.BooksConfig',
     'contacts.apps.ContactsConfig',
-    'abouts.apps.AboutsConfig'
+    'abouts.apps.AboutsConfig',
+    'django_cleanup.apps.CleanupConfig'
 ]
 
 MIDDLEWARE = [
