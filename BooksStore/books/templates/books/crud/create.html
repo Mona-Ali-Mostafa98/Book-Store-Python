@@ -1,0 +1,80 @@
+{% extends 'layouts/base.html' %}
+{% load static %}
+{% block title %} Add New Book {% endblock %}
+
+{% block body %}
+    <div class="row mt-5 justify-content-center align-items-center">
+        <div class="col-12 col-lg-8 mt-5">
+            <div class="card shadow bg-body-tertiary rounded">
+                <div class="card-header">
+                    <h2 class="text-center">Add New Book</h2>
+                </div>
+                <div class="card-body">
+                    <form method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label for="title" class="form-label">Title</label>
+                            <input type="text" class="form-control" id="title" name="title"/>
+                        </div>
+                        <div class="mb-3">
+                            <label for="category" class="form-label">Category</label>
+                            <input type="text" class="form-control" id="category" name="category"/>
+                        </div>
+                        <div class="mb-3">
+                            <label for="author" class="form-label">Author</label>
+                            <input type="text" class="form-control" id="author" name="author"/>
+                        </div>
+                        <div class="mb-3">
+                            <label for="price" class="form-label">Price</label>
+                            <input type="number" class="form-control" id="price" name="price"/>
+                        </div>
+                        <div class="mb-3">
+                            <label for="pagesNo" class="form-label">Page Numbers</label>
+                            <input type="number" class="form-control" id="pagesNo" name="pagesNo"/>
+                        </div>
+                        <div class="mb-3">
+                            <label for="ISBN" class="form-label">ISBN</label>
+                            <input type="number" class="form-control" id="ISBN" name="ISBN"/>
+                        </div>
+                        <div class="mb-3">
+                            <label for="image" class="form-label">image</label>
+
+                            <div id="image_preview" class="bg-light border border-1 d-inline-block text-center p-2 round" onclick="document.getElementById('image_input').click()">
+                                {% if book.image %}
+                                    <img src="{{ book.image.url }}" alt="Current Image" height="100">
+                                {% else %}
+                                    <p class="text-center">No image Selected</p>
+                                {% endif %}
+                            </div>
+                            <input type="file" name="image" id="image_input" accept="image/*" style="display: none;"
+                                   onchange="previewImage(event)">
+                        </div>
+                        <div class="text-center my-4">
+                            <button type="submit" class="btn main-btn btn-primary btn-lg text-center p-2">
+                                Save
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block script %}
+    <script>
+        function previewImage(event) {
+            var reader = new FileReader();
+            reader.onload = function () {
+                var output = document.getElementById('image_preview');
+                output.innerHTML = '<img src="' + reader.result + '" alt="New Image" height="100">';
+            }
+            reader.readAsDataURL(event.target.files[0]);
+        }
+
+        function triggerFileInput() {
+            var fileInput = document.getElementById('image_input');
+            fileInput.click(); // Simulate click on file input
+        }
+    </script>
+{% endblock %}
