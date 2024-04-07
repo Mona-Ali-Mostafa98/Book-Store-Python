@@ -25,6 +25,7 @@ urlpatterns = [
 
     # include categories urls file in main url
     path('books/', include('books.urls')),
+    path('categories/', include('categories.urls')),
 
     path('contacts/', include("contacts.urls")),
     path('abouts/', include("abouts.urls"))
