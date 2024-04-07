@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'accounts.apps.AccountsConfig',
     'books.apps.BooksConfig',
     'categories.apps.CategoriesConfig',
     'contacts.apps.ContactsConfig',
@@ -59,7 +60,8 @@ ROOT_URLCONF = 'BooksStore.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates']
+        # 'DIRS': [BASE_DIR / 'templates']
+        'DIRS': [BASE_DIR.joinpath('templates')]
         ,
         'APP_DIRS': True,
         'OPTIONS': {

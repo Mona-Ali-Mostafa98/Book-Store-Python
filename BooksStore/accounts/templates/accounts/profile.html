@@ -1,0 +1,20 @@
+{% extends 'layouts/base.html' %}
+{% load static %}
+{% block title %} profile {% endblock %}
+
+{% block body %}
+    <div class="row mt-5 justify-content-center align-items-center">
+        <div class="col-12 col-lg-8 mt-5">
+            <div class="card shadow bg-body-tertiary rounded">
+                <div class="card-body p-4">
+                    <h2 class=" my-4"><span class="fw-bold">User Name :</span> {{ user.username }}</h2>
+                    <p class="my-4"><span class="fw-bold">First Name :</span> {{ user.first_name|default:'-' }}</p>
+                    <p class="my-4"><span class="fw-bold">Last Name :</span> {{ user.last_name|default:'-' }}</p>
+                    <p class="my-4"><span class="fw-bold">Email :</span> {{ user.email }}</p>
+                    <p class="my-4"><span class="fw-bold">Joined At :</span> {{ user.date_joined }}</p>
+                    <a href="{% url 'books.index' %}" class="btn main-btn my-3 fs-5 text-center">Go To Dashboard</a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
