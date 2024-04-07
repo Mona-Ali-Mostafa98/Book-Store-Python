@@ -61,4 +61,58 @@
             </div>
         </div>
     </div>
+
+    <div class="row text-center border border-1 mt-5 mx-5 shadow p-3 bg-body rounded">
+        <h2 class="col">Related Books</h2>
+    </div>
+    <div class="row justify-content-center row-cols-1 row-cols-sm-2 row-cols-md-3 g-4 m-3">
+        {% for related_book in book.category.allBooks.all %}
+            {% if related_book.id != book.id %}
+                <div class="col-12 col-sm-6 col-lg-4">
+                    <div class="card m-2 h-100 shadow-lg">
+                        <img src="{{ related_book.image_url }}" alt="Image 1"
+                             class="border border-1 rounded"
+                             style="height: 40vh;">
+                        <h2 class="card-title text-center text-primary m-2"><a class="text-decoration-none"
+                                                                               href="{% url 'books.show' related_book.id %}">{{ related_book.title }}</a>
+                        </h2>
+                        <div class="card-body">
+                            <div class="row fs-5">
+                                <div class="col-6">
+                                    <div class="row">
+                                        <div class="col-12 my-2"><i
+                                                class="fa-solid fa-check text-primary me-3"></i>{{ related_book.category }}
+                                        </div>
+                                        <div class="col-12 my-2"><i class="fa-solid fa-check text-primary me-3"></i>
+                                            <span class="text-success">{{ related_book.pagesNo }}</span>
+                                        </div>
+                                        <div class="col-12 my-2"><i class="fa-solid fa-check text-primary me-3"></i>
+                                            {{ related_book.ISBN }}</div>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="row">
+                                        <div class="col-12 my-2"><i class="fa-solid fa-check text-primary me-3"></i>
+                                            {{ related_book.author }}</div>
+                                        <div class="col-12 my-2"><i class="fa-solid fa-check text-primary me-3"></i>
+                                            $ {{ related_book.price }}</div>
+                                        <div class="col-12 my-2">
+                                            <div class="row justify-content-around align-items-center">
+                                                <button class="btn main-btn col-4 fs-5">
+                                                    <i class="fa-solid fa-heart"></i>
+                                                </button>
+                                                <button class="btn main-btn col-4 fs-5">
+                                                    <i class="fa-solid fa-cart-shopping"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+        {% endfor %}
+    </div>
 {% endblock %}
