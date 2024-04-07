@@ -90,7 +90,7 @@ def create(request):
 """
 
 def create(request):
-    form = BookModelForm()
+    form = BookModelForm() # can use BookForm() also
     if request.method == "POST":
         form = BookForm(request.POST, request.FILES)
         if form.is_valid():
@@ -107,12 +107,14 @@ def create(request):
             book = Book(title=title, category=category, author=author,  price=price, pagesNo=pagesNo, ISBN=ISBN, image=image)
 
             book.save()
+            messages.success(request, "Book Add Successfully.")
             return redirect(book.show_url)
 
     return render(request, 'books/crud/create.html', context={'form': form})
 
 
-
+"""
+# Edit method before validation and use forms
 def edit(request, id):
     book = get_object_or_404(Book, pk=id)
 
@@ -140,6 +142,24 @@ def edit(request, id):
         return redirect(book.show_url)
 
     return render(request, 'books/crud/edit.html', {'book': book})
+"""
+
+
+def edit(request, id):
+    book = Book.get_book_by_id(id)
+    # book = get_object_or_404(Book, pk=id)
+    form = BookModelForm(instance=book)
+
+    if request.method == "POST":
+        form = BookModelForm(request.POST, request.FILES, instance=book)
+        if form.is_valid():
+            book = form.save()
+
+            messages.success(request, "Book updated successfully.")
+            return redirect(book.show_url)
+
+    return render(request, 'books/crud/edit.html', context={"form": form})
+
 
 """
 def show(request, id):

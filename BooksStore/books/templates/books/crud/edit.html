@@ -12,46 +12,38 @@
                 <div class="card-body">
                     <form method="post" enctype="multipart/form-data">
                         {% csrf_token %}
+
+                        {% for field in form %}
+                            {% if field.name != 'image' %}
+                                <div class="mb-3">
+                                    <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label> <span class="text-danger">*</span> {# {{ field.label_tag }} #}
+                                    {{ field }}
+                                    {% for error in field.errors %}
+                                        <p class="text-danger my-1">{{ error }}</p>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+
                         <div class="mb-3">
-                            <label for="title" class="form-label">Title</label>
-                            <input type="text" class="form-control" id="title" name="title" value="{{ book.title }}"/>
-                        </div>
-                        <div class="mb-3">
-                            <label for="category" class="form-label">Category</label>
-                            <input type="text" class="form-control" id="category" name="category"
-                                   value="{{ book.category }}"/>
-                        </div>
-                        <div class="mb-3">
-                            <label for="author" class="form-label">Author</label>
-                            <input type="text" class="form-control" id="author" name="author"
-                                   value="{{ book.author }}"/>
-                        </div>
-                        <div class="mb-3">
-                            <label for="price" class="form-label">Price</label>
-                            <input type="number" class="form-control" id="price" name="price" value="{{ book.price }}"/>
-                        </div>
-                        <div class="mb-3">
-                            <label for="pagesNo" class="form-label">Page Numbers</label>
-                            <input type="number" class="form-control" id="pagesNo" name="pagesNo"
-                                   value="{{ book.pagesNo }}"/>
-                        </div>
-                        <div class="mb-3">
-                            <label for="ISBN" class="form-label">ISBN</label>
-                            <input type="number" class="form-control" id="ISBN" name="ISBN" value="{{ book.ISBN }}"/>
-                        </div>
-                        <div class="mb-3">
-                            <label for="image" class="form-label">image</label>
+                            <label for="{{ form.image.id_for_label }}" class="form-label">{{ form.image.label }}</label>
                             <div id="image_preview" class="bg-light border border-1 d-inline-block text-center p-2"
                                  onclick="document.getElementById('image_input').click()">
-                                {% if book.image %}
-                                    <img src="{{ book.image.url }}" alt="Current Image" height="100">
+                                {% if form.image.value %} {# old "book.image" instead of "form.image.value" #}
+                                    <img src="{{ form.image.value.url }}" alt="Current Image" height="100">
                                 {% else %}
                                     <p class="text-center">No image Selected</p>
                                 {% endif %}
                             </div>
                             <input type="file" name="image" id="image_input" accept="image/*" style="display: none;"
                                    onchange="previewImage(event)">
+                            <a href="{{ form.image.value.url }}">Preview image</a>
+
+                            {% for error in form.image.errors %}
+                                <p class="text-danger my-1">{{ error }}</p>
+                            {% endfor %}
                         </div>
+                    
                         <div class="text-center my-4">
                             <button type="submit" class="btn main-btn btn-primary btn-lg text-center p-2">
                                 Save
