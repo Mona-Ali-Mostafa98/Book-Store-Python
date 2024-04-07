@@ -45,20 +45,17 @@ def delete(request, id):
     return redirect(url)
 
 """
-def band_delete(request, id):
-    band = Band.objects.get(id=id)  # we need this for both GET and POST
+# delete way by redirect user to delete page
+def delete(request, id):
+    book = get_object_or_404(Book, pk=id)
 
     if request.method == 'POST':
-        # delete the band from the database
-        band.delete()
-        # redirect to the bands list
-        return redirect('band_list'))
-
-    # no need for an `else` here. If it's a GET request, just continue
+        book.delete()
+        return redirect('books.index'))
 
     return render(request,
-                    'listings/band_delete.html',
-                    {'band': band})"""
+                    'books/delete.html',
+                    {'book': book})"""
 
 
 def create(request):
