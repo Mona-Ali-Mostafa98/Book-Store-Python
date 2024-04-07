@@ -1,13 +1,14 @@
 from django.db import models
 from django.shortcuts import reverse, get_object_or_404
 from django.core.validators import MinValueValidator, MinLengthValidator
+from categories.models import Category
 
 # Create your models here.
 class Book(models.Model):
     image = models.ImageField(upload_to='books/images')
-    title = models.CharField(max_length=255, unique=True, validators=[MinLengthValidator(2)])
-    category = models.CharField(max_length=255, null=True, blank=True)
-    author = models.CharField(max_length=255, null=True, blank=True)
+    title = models.CharField(max_length=100, unique=True, validators=[MinLengthValidator(2)])
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, null=True, blank=True, related_name="allBooks")
+    author = models.CharField(max_length=100, null=True, blank=True)
     price = models.FloatField(null=True, blank=True, validators=[MinValueValidator(0.0)])# IntegerField
     pagesNo = models.PositiveIntegerField('Page Numbers', null=True, blank=True)
     ISBN = models.PositiveIntegerField(null=True, blank=True)

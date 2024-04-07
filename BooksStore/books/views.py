@@ -9,6 +9,7 @@ import json
 
 # imports from your created files
 from books.models import Book
+from categories.models import Category
 from books.forms import BookModelForm, BookForm
 
 books = [
@@ -91,20 +92,23 @@ def create(request):
 
 def create(request):
     form = BookModelForm() # can use BookForm() also
+    category = get_object_or_404(Category, pk=1)
+
     if request.method == "POST":
         form = BookForm(request.POST, request.FILES)
         if form.is_valid():
             print(form.cleaned_data)
 
             title = form.cleaned_data["title"]
-            category = form.cleaned_data["category"]
+            category = category
             author = form.cleaned_data["author"]
             price = form.cleaned_data["price"]
             pagesNo = form.cleaned_data["pagesNo"]
             ISBN = form.cleaned_data["ISBN"]
+            description = form.cleaned_data["description"]
             image = form.cleaned_data['image']
 
-            book = Book(title=title, category=category, author=author,  price=price, pagesNo=pagesNo, ISBN=ISBN, image=image)
+            book = Book(title=title, category=category, author=author,  price=price, pagesNo=pagesNo, ISBN=ISBN, description=description, image=image)
 
             book.save()
             messages.success(request, "Book Add Successfully.")
