@@ -1,0 +1,88 @@
+{% extends 'layouts/base.html' %}
+{% load static %}
+{% block title %} Categories Show {% endblock %}
+
+{% block body %}
+    {% if messages %}
+        <div class="messages mt-4">
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                    <strong> {{ message }} </strong>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <div class="row justify-content-center row-cols-1 row-cols-sm-2 row-cols-md-3 g-4 m-3">
+        <div class="col-12 col-sm-6 col-lg-8">
+            <div class="card m-2 h-100 shadow-lg">
+                <div class="row g-0 justify-content-center align-items-center">
+                    <div class="col-md-4 p-2 text-center">
+                        <img src="{{ category.logo_url }}" alt="Image 1" class="border border-1 rounded" style="height: 40vh; width: 100%">
+                    </div>
+
+                    <div class="col-md-8"><div class="card-body">
+                    <h2 class="card-title text-center text-primary m-2">{{ category.name }}</h2>
+                    <div class="row fs-5">
+                        <div class="col-12 my-2"><i class="fa-solid fa-check text-primary me-3"></i>{{ category.description }}</div>
+                    </div>
+                </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row text-center border border-1 mt-5 mx-5 shadow p-3 bg-body rounded">
+        <h2 class="col">All Books In This Category </h2>
+    </div>
+    <div class="row justify-content-center row-cols-1 row-cols-sm-2 row-cols-md-3 g-4 m-3">
+        {% for book in category.allBooks.all %}
+            <div class="col-12 col-sm-6 col-lg-4">
+                <div class="card m-2 h-100 shadow-lg">
+                    <img src="{{ book.image_url }}" alt="Image 1"
+                         class="border border-1 rounded"
+                         style="height: 40vh;">
+                    <h2 class="card-title text-center text-primary m-2"><a class="text-decoration-none"
+                                                                           href="{% url 'books.show' book.id %}">{{ book.title }}</a>
+                    </h2>
+                    <div class="card-body">
+                        <div class="row fs-5">
+                            <div class="col-6">
+                                <div class="row">
+                                    <div class="col-12 my-2"><i
+                                            class="fa-solid fa-check text-primary me-3"></i>{{ book.category }}
+                                    </div>
+                                    <div class="col-12 my-2"><i class="fa-solid fa-check text-primary me-3"></i>
+                                        <span class="text-success">{{ book.pagesNo }}</span>
+                                    </div>
+                                    <div class="col-12 my-2"><i class="fa-solid fa-check text-primary me-3"></i>
+                                        {{ book.ISBN }}</div>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="row">
+                                    <div class="col-12 my-2"><i class="fa-solid fa-check text-primary me-3"></i>
+                                        {{ book.author }}</div>
+                                    <div class="col-12 my-2"><i class="fa-solid fa-check text-primary me-3"></i>
+                                        $ {{ book.price }}</div>
+                                    <div class="col-12 my-2">
+                                        <div class="row justify-content-around align-items-center">
+                                            <button class="btn main-btn col-4 fs-5">
+                                                <i class="fa-solid fa-heart"></i>
+                                            </button>
+                                            <button class="btn main-btn col-4 fs-5">
+                                                <i class="fa-solid fa-cart-shopping"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

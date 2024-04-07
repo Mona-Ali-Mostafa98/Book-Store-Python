@@ -1,0 +1,25 @@
+{% extends 'layouts/base.html' %}
+{% load static %}
+{% block title %} Categories Show {% endblock %}
+
+{% block body %}
+    <div class="row justify-content-center row-cols-1 row-cols-sm-2 row-cols-md-3 g-4 m-3">
+        <div class="col-12 col-sm-6 col-lg-8">
+            <div class="card m-2 h-100 shadow-lg">
+                <div class="row g-0 justify-content-center align-items-center">
+                    <div class="col-md-4 p-2 text-center">
+                        <img src="{{ category.logo_url }}" alt="Image 1" class="border border-1 rounded" style="height: 40vh; width: 100%">
+                    </div>
+
+                    <div class="col-md-8"><div class="card-body">
+                    <h2 class="card-title text-center text-primary m-2">{{ category.name }}</h2>
+                    <div class="row fs-5">
+                        <div class="col-12 my-2"><i class="fa-solid fa-check text-primary me-3"></i>{{ category.description }}</div>
+                    </div>
+                </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

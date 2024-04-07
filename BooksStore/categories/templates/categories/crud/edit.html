@@ -1,0 +1,76 @@
+{% extends 'layouts/base.html' %}
+{% load static %}
+{% block title %} Update Details Of Category {% endblock %}
+
+{% block body %}
+    <div class="row mt-5 justify-content-center align-items-center">
+        <div class="col-12 col-lg-8 mt-5">
+            <div class="card shadow bg-body-tertiary rounded">
+                <div class="card-header">
+                    <h2 class="text-center">Update Details Of Category "{{form.instance.name}}" </h2>
+                </div>
+                <div class="card-body">
+                    <form method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+
+                        {% for field in form %}
+                            {% if field.name != 'logo' %}
+                                <div class="mb-3">
+                                    <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label> <span class="text-danger">*</span> {# {{ field.label_tag }} #}
+                                    {{ field }}
+                                    {% for error in field.errors %}
+                                        <p class="text-danger my-1">{{ error }}</p>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+
+                        <div class="mb-3">
+                            <label for="{{ form.logo.id_for_label }}" class="form-label">{{ form.logo.label }}</label>
+                            <div id="image_preview" class="bg-light border border-1 d-inline-block text-center p-2"
+                                 onclick="document.getElementById('image_input').click()">
+                                {% if form.logo.value %} {# old "category.image" instead of "form.logo.value" #}
+                                    <img src="{{ form.logo.value.url }}" alt="Current Image" height="100">
+                                {% else %}
+                                    <p class="text-center">No image Selected</p>
+                                {% endif %}
+                            </div>
+                            <input type="file" name="image" id="image_input" accept="image/*" style="display: none;"
+                                   onchange="previewImage(event)">
+                            <a href="{{ form.logo.value.url }}">Preview image</a>
+
+                            {% for error in form.logo.errors %}
+                                <p class="text-danger my-1">{{ error }}</p>
+                            {% endfor %}
+                        </div>
+                    
+                        <div class="text-center my-4">
+                            <button type="submit" class="btn main-btn btn-primary btn-lg text-center p-2">
+                                Save
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+
+{% block script %}
+    <script>
+        function previewImage(event) {
+            var reader = new FileReader();
+            reader.onload = function () {
+                var output = document.getElementById('image_preview');
+                output.innerHTML = '<img src="' + reader.result + '" alt="New Image" height="100">';
+            }
+            reader.readAsDataURL(event.target.files[0]);
+        }
+
+        function triggerFileInput() {
+            var fileInput = document.getElementById('image_input');
+            fileInput.click();
+        }
+    </script>
+{% endblock %}
