@@ -9,6 +9,7 @@ import json
 
 # imports from your created files
 from books.models import Book
+from books.forms import BookModelForm, BookForm
 
 books = [
     {"id":1, "image":"book1.png", "title":"Book #1", "category":"science", "author":"Author Name", "price":"100", "pagesNo":"20", "ISBN":"10"},
@@ -57,7 +58,8 @@ def delete(request, id):
                     'books/delete.html',
                     {'book': book})"""
 
-
+"""
+# Create before using forms or form model and without validation
 def create(request):
     if request.method == "POST":
         if request.FILES:
@@ -85,6 +87,30 @@ def create(request):
 
     # get request
     return  render(request, 'books/crud/create.html')
+"""
+
+def create(request):
+    form = BookModelForm()
+    if request.method == "POST":
+        form = BookForm(request.POST, request.FILES)
+        if form.is_valid():
+            print(form.cleaned_data)
+
+            title = form.cleaned_data["title"]
+            category = form.cleaned_data["category"]
+            author = form.cleaned_data["author"]
+            price = form.cleaned_data["price"]
+            pagesNo = form.cleaned_data["pagesNo"]
+            ISBN = form.cleaned_data["ISBN"]
+            image = form.cleaned_data['image']
+
+            book = Book(title=title, category=category, author=author,  price=price, pagesNo=pagesNo, ISBN=ISBN, image=image)
+
+            book.save()
+            return redirect(book.show_url)
+
+    return render(request, 'books/crud/create.html', context={'form': form})
+
 
 
 def edit(request, id):

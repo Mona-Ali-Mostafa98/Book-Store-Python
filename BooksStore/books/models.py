@@ -1,15 +1,17 @@
 from django.db import models
 from django.shortcuts import  reverse
+from django.core.validators import MinValueValidator, MinLengthValidator
 
 # Create your models here.
 class Book(models.Model):
     image = models.ImageField(upload_to='books/images')
-    title = models.CharField(max_length=100, unique=True)
-    category = models.CharField(max_length=100, null=True, blank=True)
-    author = models.CharField(max_length=100, null=True, blank=True)
-    price = models.IntegerField(null=True, blank=True)
-    pagesNo = models.IntegerField(null=True, blank=True)
-    ISBN = models.IntegerField(null=True, blank=True)
+    title = models.CharField(max_length=255, unique=True, validators=[MinLengthValidator(2)])
+    category = models.CharField(max_length=255, null=True, blank=True)
+    author = models.CharField(max_length=255, null=True, blank=True)
+    price = models.FloatField(null=True, blank=True, validators=[MinValueValidator(0.0)])# IntegerField
+    pagesNo = models.PositiveIntegerField('Page Numbers', null=True, blank=True)
+    ISBN = models.PositiveIntegerField(null=True, blank=True)
+    description = models.TextField(null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True, null=True)
     updated_at = models.DateTimeField(auto_now=True, null=True)
 
