@@ -29,7 +29,8 @@
                              style="height: 20vh;">
                         </div>
                         <div class="col">
-                            <a class="text-decoration-none" href="{% url 'categories.show' category.id %}">{{ category.name }}</a>
+                            <a class="text-decoration-none" href="{{ category.show_url }}">{{ category.name }}</a>
+                            {# <a class="text-decoration-none" href="{% url 'categories.show' category.id %}">{{ category.name }}</a>#}
                         </div>
                     </div>
                 </div>

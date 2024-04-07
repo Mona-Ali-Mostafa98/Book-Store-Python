@@ -27,7 +27,7 @@
                              class="border border-1 rounded"
                              style="height: 40vh;">
                         <h2 class="card-title text-center text-primary m-2"><a class="text-decoration-none"
-                                                                               href="{% url 'books.show' book.id %}">{{ book.title }}</a>
+                                                                               href="{{ book.show_url }}">{{ book.title }}</a>
                         </h2>
                         <div class="card-body">
                             <div class="row fs-5">
