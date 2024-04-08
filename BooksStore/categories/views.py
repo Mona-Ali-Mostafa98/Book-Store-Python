@@ -6,12 +6,13 @@ from django.contrib import messages
 # imports from your created files
 from categories.models import Category
 from categories.forms import CategoryModelForm
-
+from django.contrib.auth.decorators import login_required
 def home(request):
     categories = Category.objects.all()
     return render(request, "categories/index.html",
                   context={"categories": categories}, status=200)\
 
+@login_required()
 def index(request):
     categories = Category.objects.all()
     return render(request, "categories/crud/index.html",
@@ -24,6 +25,7 @@ def show(request, id):
     return render(request, "categories/crud/show.html", context={"category": category})
 
 
+@login_required()
 def delete(request, id):
     category = get_object_or_404(Category, pk=id)
     category.delete()
@@ -33,6 +35,7 @@ def delete(request, id):
     return redirect(url)
 
 
+@login_required()
 def create(request):
     form = CategoryModelForm()
     if request.method == "POST":
@@ -53,6 +56,7 @@ def create(request):
     return render(request, 'categories/crud/create.html', context={'form': form})
 
 
+@login_required()
 def edit(request, id):
     category = Category.get_category_by_id(id)
     # category = get_object_or_404(Category, pk=id)
