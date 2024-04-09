@@ -75,6 +75,8 @@ TEMPLATES = [
     },
 ]
 
+AUTH_USER_MODEL = 'accounts.User'
+
 WSGI_APPLICATION = 'BooksStore.wsgi.application'
 
 
